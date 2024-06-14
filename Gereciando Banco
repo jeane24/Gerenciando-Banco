@@ -1,0 +1,92 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.gerenciabanco;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author jeane
+ */
+class GerenciaBanco {
+    private String nome;
+    private String sobrenome;
+    private String cpf;
+    private double saldo;
+
+    public GerenciaBanco (String nome, String sobrenome, String cpf){
+        this.nome= nome;
+        this.sobrenome= sobrenome;
+        this.cpf= cpf;
+        this.saldo= 0.0;
+
+    }
+    public void consultarsaldo () {
+        System.out.println("Seu saldo atual é R$" + saldo);
+    }
+    
+    public void depositar(double valor) {
+        if (valor > 0) {
+            saldo += valor;
+            System.out.println("Deposito de R$" + valor + "realizado com sucesso");
+        } 
+        else { 
+            System.out.println("valor de deposito invalido!");
+        }
+    }
+    public void sacar(double valor) {
+        if (valor > 0 && valor <= saldo) {
+            saldo -= valor;
+            System.out.println("saque de R$" + valor + "realizado com sucesso");
+        } 
+        else { 
+            System.out.println("Saque insuficiente ou valor de saque invalido!");
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner (System.in);
+        
+        System.out.print("Olá, bem-vindo ao nosso banco!");
+        System.out.print("Informe seu nome por favor:");
+        String nome = scanner.nextLine();
+        System.out.print("Informe seu sobrenome por favor:");
+        String sobrenome = scanner.nextLine();
+        System.out.print("Informe seu cpf por favor:");
+        String cpf = scanner.nextLine();
+        
+        GerenciaBanco cliente = new GerenciaBanco(nome, sobrenome, cpf);
+        
+        boolean continuar = true;
+         while(continuar) {
+            System.out.println("O que deseja:");
+            System.out.println("1 -  Consultar saldo:");
+            System.out.println("2 - Fazer depósito:");
+            System.out.println("3 - Fazer saque:");
+            System.out.println("4 - Encerrar aplicação\n\n");
+            
+            int escolha = scanner.nextInt();
+            switch (escolha) {
+                case 1 -> cliente.consultarsaldo();
+                case 2 -> {
+                    System.out.print("Informe o valor a ser depositado:");
+                    double valorDeposito = scanner.nextDouble();
+                    cliente.depositar(valorDeposito);
+                }
+                case 3 -> {
+                    System.out.print("Informe o valor a ser sacado:");
+                    double valorSaque = scanner.nextDouble();
+                    cliente.sacar(valorSaque);
+                }
+                case 4 -> {
+                    continuar = false;
+                    System.out.print("Encerrando a aplicação, até breve.");
+                }
+                default -> System.out.print("Opção inválida, Tente novamente.");
+                    
+            }
+        }
+    }  
+ }
